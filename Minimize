@@ -1,0 +1,27 @@
+#PBS -l walltime=23:50:00
+
+#PBS -l nodes=1:ppn=12
+
+#PBS -N min
+
+#PBS -q cse
+
+#
+num=100
+
+#Input file name
+ifile=Minimization
+
+#Output file name
+ofile=BK_min
+
+# Name of the complex
+cmplx=BL
+
+cd /home/zshamsi2/BRI1/BRI1_BLD/Initial_BL_100/Scripts 
+mkdir ../Minimization
+for i in `seq 1 $num`
+do
+	mkdir ../Minimization/${cmplx}_${i}/
+	sander -O -i ${ifile}.in -o ../Minimization/${cmplx}_${i}/${ofile}_${i}.out -p ../Initial_Amber_Files_${cmplx}/${cmplx}_${i}/${cmplx}_${i}.top -c ../Initial_Amber_Files_${cmplx}/${cmplx}_${i}/${cmplx}_${i}.crd -r ../Minimization/${cmplx}_${i}/${ofile}_${i}.rst
+done	

@@ -1,0 +1,47 @@
+from msmbuilder.cluster import KMeans
+import cPickle as pickle
+import numpy as np
+from __future__ import print_function
+import os
+from matplotlib.pyplot import *
+from msmbuilder.featurizer import SuperposeFeaturizer
+from msmbuilder.cluster import KCenters
+from msmbuilder.msm import MarkovStateModel
+dataset = [np.load('featurizer_file/00000000.npy')]
+assert dataset[0].ndim == 2
+assignments = KCenters(n_clusters=20).fit_predict(dataset)
+msm = MarkovStateModel(lag_time=10, verbose=False).fit(assignments)
+timescale = msm.timescales_
+msm.transmat_
+msm.countsmat_
+msm.populations_
+
+
+
+Mine:
+import mdtraj as md
+dataset =[]
+for trajectory_file in ['1_output.mdcrd','2_output.mdcrd','3_output.mdcrd','4_output.mdcrd','5_output.mdcrd','6_output.mdcrd','7_output.mdcrd','8_output.mdcrd','9_output.mdcrd','10_output.mdcrd','11_output.mdcrd','12_output.mdcrd','13_output.mdcrd','14_output.mdcrd','15_output.mdcrd','16_output.mdcrd','17_output.mdcrd','18_output.mdcrd','19_output.mdcrd']:
+    t = md.load(trajectory_file, top ='topology.pdb')
+    indices, phi = md.compute_phi(t)
+    dataset.append(phi)
+
+import pickle
+f = open('dataset.pkl','w')
+pickle.dump(dataset,f)
+f.close()
+
+
+from msmbuilder.cluster import KMeans
+cluster = KMeans(n_clusters=10)
+cluster.fit(dataset)
+
+g= open('cluster.pkl', 'w')
+cluster=pickle.load(g)
+g.close()
+
+
+
+for trajectory_file in ['1_output.mdcrd','2_output.mdcrd','3_output.mdcrd','4_output.mdcrd','5_output.mdcrd','6_output.mdcrd','7_output.mdcrd','8_output.mdcrd','9_output.mdcrd','10_output.mdcrd','11_output.mdcrd','12_output.mdcrd','13_output.mdcrd','14_output.mdcrd','15_output.mdcrd','16_output.mdcrd','17_output.mdcrd','18_output.mdcrd','19_output.mdcrd']:
+    t = md.load(trajectory_file, top ='topology.pdb')
+    traj.append(t)

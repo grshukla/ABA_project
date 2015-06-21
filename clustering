@@ -1,0 +1,40 @@
+msmb DihedralFeaturizer --types phi psi --top NRT-aMD1.pdb --trjs "*.mdcrd" --transformed aMD01-phipsi
+
+
+
+python
+from msmbuilder.cluster import KMeans
+import cPickle as pickle
+import numpy as np
+dataset = [np.load('00000000.npy'), np.load('00000001.npy'), np.load('00000002.npy'), np.load('00000003.npy'), np.load('00000004.npy'), np.load('00000005.npy')] 
+assert dataset[0].ndim == 2 and dataset[1].ndim == 2 and dataset[2].ndim == 2 and dataset[3].ndim == 2 and dataset[4].ndim == 2 and dataset[5].ndim == 2
+
+cl = KMeans(n_clusters=10)
+cl.fit(dataset)
+
+
+output = open( 'aMD01cls.pkl', 'w')
+pickle.dump(cl, output, pickle.HIGHEST_PROTOCOL) 
+
+
+
+
+
+import msmbuilder
+from msmbuilder.utils import load 
+cl=load('aMD01cls.pkl')
+
+
+
+
+ipython --HistoryManager.hist_file='ipyhist.sqlite'
+
+clusterer.n_clusters 
+clusterer.cluster_centers_
+clusterer.cluster_centers_.shape
+clusterer.cluster_centers_[0]
+len(clusterer.cluster_centers_[0])
+
+
+
+
