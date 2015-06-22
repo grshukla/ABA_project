@@ -1,3 +1,41 @@
+################### from balaji ####################
+
+msmb DihedralFeaturizer --types phi psi --top NRT-aMD1.pdb --trjs "*.mdcrd" --transformed aMD01-phipsi
+
+
+
+python
+from msmbuilder.cluster import KMeans
+import cPickle as pickle
+import numpy as np
+dataset = [np.load('00000000.npy'), np.load('00000001.npy'), np.load('00000002.npy'), np.load('00000003.npy'), np.load('00000004.npy'), np.load('00000005.npy')] 
+assert dataset[0].ndim == 2 and dataset[1].ndim == 2 and dataset[2].ndim == 2 and dataset[3].ndim == 2 and dataset[4].ndim == 2 and dataset[5].ndim == 2
+
+cl = KMeans(n_clusters=10)
+cl.fit(dataset)
+
+
+output = open( 'aMD01cls.pkl', 'w')
+pickle.dump(cl, output, pickle.HIGHEST_PROTOCOL) 
+
+
+import msmbuilder
+from msmbuilder.utils import load 
+cl=load('aMD01cls.pkl')
+
+
+ipython --HistoryManager.hist_file='ipyhist.sqlite'
+
+clusterer.n_clusters 
+clusterer.cluster_centers_
+clusterer.cluster_centers_.shape
+clusterer.cluster_centers_[0]
+len(clusterer.cluster_centers_[0])
+
+
+########################## making msms ####################################
+
+
 from msmbuilder.cluster import KMeans
 import cPickle as pickle
 import numpy as np
@@ -18,7 +56,7 @@ msm.populations_
 
 
 
-Mine:
+############################## mine V1 ###########################
 import mdtraj as md
 dataset =[]
 for trajectory_file in ['1_output.mdcrd','2_output.mdcrd','3_output.mdcrd','4_output.mdcrd','5_output.mdcrd','6_output.mdcrd','7_output.mdcrd','8_output.mdcrd','9_output.mdcrd','10_output.mdcrd','11_output.mdcrd','12_output.mdcrd','13_output.mdcrd','14_output.mdcrd','15_output.mdcrd','16_output.mdcrd','17_output.mdcrd','18_output.mdcrd','19_output.mdcrd']:
@@ -42,6 +80,49 @@ g.close()
 
 
 
+
+
+
+
+
+
+
+
+################################# mine v2 : RMSD features #################################
+from msmbuilder.featurizer import SuperposeFeaturizer
+import mdtraj as md
+from msmbuilder.cluster import KMeans
+
+
 for trajectory_file in ['1_output.mdcrd','2_output.mdcrd','3_output.mdcrd','4_output.mdcrd','5_output.mdcrd','6_output.mdcrd','7_output.mdcrd','8_output.mdcrd','9_output.mdcrd','10_output.mdcrd','11_output.mdcrd','12_output.mdcrd','13_output.mdcrd','14_output.mdcrd','15_output.mdcrd','16_output.mdcrd','17_output.mdcrd','18_output.mdcrd','19_output.mdcrd']:
     t = md.load(trajectory_file, top ='topology.pdb')
     traj.append(t)
+
+# traj is mdtraj trajectory with 19 trajectories. 
+# len(traj[0]) is 905. first trajectory has 905 frames. 
+
+
+topology = traj[0].topology
+# <mdtraj.Topology with 2 chains, 366 residues, 5799 atoms, 5854 bonds at 0x105167790>
+
+
+indices =[atom.index for atom in topology.atoms if atom.element.symbol in ['C', 'O', 'N']]
+
+
+featurizer = SuperposeFeaturizer(indices,traj[0][0])
+
+
+sequences = featurizer.transform(traj)
+# array of featurized trajectories
+# len(sequences) = 19                # trajectory files 
+# len(sequences[0]) = 905            # frames in first trajectory
+# len(sequences[0][0]) = 2911        # heavy atom distances in first frame
+
+
+
+cluster = KMeans(n_clusters=15)
+
+cluster.fit(sequences)
+
+
+lables = cluster.labels_
