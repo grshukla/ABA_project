@@ -1,0 +1,4 @@
+parm aba.top
+trajin sim1/newcrd_aba_prod1.mdcrd 
+parmbox alpha 90 beta 90 gamma 90
+trajout fah_crd1.rst restart onlyframes 0

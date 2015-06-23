@@ -65,7 +65,7 @@ for trajectory_file in ['1_output.mdcrd','2_output.mdcrd','3_output.mdcrd','4_ou
     dataset.append(phi)
 
 import pickle
-f = open('dataset.pkl','w')
+f = open('dataset.pkl','wb’)
 pickle.dump(dataset,f)
 f.close()
 
@@ -74,7 +74,7 @@ from msmbuilder.cluster import KMeans
 cluster = KMeans(n_clusters=10)
 cluster.fit(dataset)
 
-g= open('cluster.pkl', 'w')
+g= open('cluster.pkl', ‘rb’)
 cluster=pickle.load(g)
 g.close()
 
@@ -126,3 +126,50 @@ cluster.fit(sequences)
 
 
 lables = cluster.labels_
+
+
+################################ Tica  #########################
+from msmbuilder.featurizer import SuperposeFeaturizer
+import mdtraj as md
+from msmbuilder.cluster import KMeans
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.colors import LogNorm
+from msmbuilder.decomposition import tICA
+
+
+traj =[]
+
+
+for trajectory_file in ['1_output.mdcrd','2_output.mdcrd','3_output.mdcrd','4_output.mdcrd','5_output.mdcrd','6_output.mdcrd','7_output.mdcrd','8_output.mdcrd','9_output.mdcrd','10_output.mdcrd','11_output.mdcrd','12_output.mdcrd','13_output.mdcrd','14_output.mdcrd','15_output.mdcrd','16_output.mdcrd','17_output.mdcrd','18_output.mdcrd','19_output.mdcrd']:
+    t = md.load(trajectory_file, top ='topology.pdb')
+    traj.append(t)
+
+
+
+topology = traj[0].topology
+
+indices =[atom.index for atom in topology.atoms if atom.element.symbol in ['C', 'O', 'N']]
+
+featurizer = SuperposeFeaturizer(indices,traj[0][0])
+
+sequences = featurizer.transform(traj)
+
+tica = tICA(n_components=2)
+transformed = tica.fit_transform(sequences)
+transformed = np.concatenate(transformed)
+
+
+x = transformed[:, 0]
+y = transformed[:, 1]
+
+plt.axes(axisbg='w')
+plt.grid(False)
+plt.hist2d(x, y, bins=100, cmap='hot_r', norm=LogNorm())
+plt.xlabel('1st tIC')
+plt.ylabel('2nd tIC')
+plt.title('tICA Heatmap (log color scale)')
+plt.colorbar()
+plt.show()
+
+
