@@ -1,0 +1,26 @@
+parm nife2.top
+trajin ../../sim1/mdcrd_amd_nife_prod1.mdcrd 1 last 20
+trajin ../../sim2/mdcrd_amd_nife_prod2.mdcrd 1 last 20
+trajin ../../sim3/mdcrd_amd_nife_prod3.mdcrd 1 last 20
+trajin ../../sim4/mdcrd_amd_nife_prod4.mdcrd 1 last 20
+trajin ../../sim5/mdcrd_amd_nife_prod5.mdcrd 1 last 20
+trajin ../../sim6/mdcrd_amd_nife_prod6.mdcrd 1 last 20
+trajin ../../sim7/mdcrd_amd_nife_prod7.mdcrd 1 last 20
+trajin ../../sim8/mdcrd_amd_nife_prod8.mdcrd 1 last 20
+trajin ../../sim9/mdcrd_amd_nife_prod9.mdcrd 1 last 20
+trajin ../../sim10/mdcrd_amd_nife_prod10.mdcrd 1 last 20
+trajin ../../sim11/mdcrd_amd_nife_prod11.mdcrd 1 last 20
+trajin ../../sim12/mdcrd_amd_nife_prod12.mdcrd 1 last 20
+trajin ../../sim13/mdcrd_amd_nife_prod13.mdcrd 1 last 20
+trajin ../../sim14/mdcrd_amd_nife_prod14.mdcrd 1 last 20
+trajin ../../sim15/mdcrd_amd_nife_prod15.mdcrd 1 last 20
+trajin ../../sim16/mdcrd_amd_nife_prod16.mdcrd 1 last 20
+trajin ../../sim17/mdcrd_amd_nife_prod17.mdcrd 1 last 20
+trajin ../../sim18/mdcrd_amd_nife_prod18.mdcrd 1 last 20
+trajin ../../sim19/mdcrd_amd_nife_prod19.mdcrd 1 last 20
+trajin ../../sim20/mdcrd_amd_nife_prod20.mdcrd 1 last 20
+trajin ../../sim21/mdcrd_amd_nife_prod21.mdcrd 1 last 20
+autoimage
+strip :WAT outprefix strippedwater
+strip :Na+ outprefix stripped_water_Na
+trajout output.mdcrd
