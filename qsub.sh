@@ -11,11 +11,11 @@ five=$(qsub -W depend=afterany:$four sim25/prod.pbs)
 echo $five
 six=$(qsub -W depend=afterany:$five sim26/prod.pbs)
 echo $six
-seven=$(qsub -W depend=afterany:$five sim27/prod.pbs)
+seven=$(qsub -W depend=afterany:$six sim27/prod.pbs)
 echo $seven
-eight=$(qsub -W depend=afterany:$five sim28/prod.pbs)
+eight=$(qsub -W depend=afterany:$seven sim28/prod.pbs)
 echo $eight
-nine=$(qsub -W depend=afterany:$five sim29/prod.pbs)
+nine=$(qsub -W depend=afterany:$eight sim29/prod.pbs)
 echo $nine
-ten=$(qsub -W depend=afterany:$five sim30/prod.pbs)
+ten=$(qsub -W depend=afterany:$nine sim30/prod.pbs)
 echo $ten

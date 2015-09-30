@@ -1,0 +1,36 @@
+############# Adding residues ###########
+
+package require psfgen 
+topology top_all27_prot_lipid.inp 
+pdbalias atom ILE CD1 CD
+pdbalias residue HIS HSE
+
+mol load pdb apo_frag0.pdb
+
+segment apo {
+residue 1 MET
+residue 2 SER
+residue 3 SER
+residue 4 SER
+residue 5 PRO
+pdb apo_frag0.pdb
+residue 190 GLU
+}
+
+set allatoms [atomselect top "all"]
+$allatoms set chain B
+
+patch NTER apo:1
+patch CTER apo:190
+
+pdbalias atom ILE CD1 CD
+coordpdb apo_frag0.pdb APO
+
+
+guesscoord
+
+
+writepdb apo0.pdb
+
+
+

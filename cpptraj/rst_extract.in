@@ -1,0 +1,4 @@
+parm aba.top
+trajin sim1/newcrd_aba_prod1.mdcrd 1 1
+parmbox alpha 90 beta 90 gamma 90
+trajout 1_fah.rst restart

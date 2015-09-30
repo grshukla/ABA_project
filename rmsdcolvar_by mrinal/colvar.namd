@@ -1,0 +1,167 @@
+#############################################################
+## JOB DESCRIPTION                                         ##
+#############################################################
+
+# RMSD colvar
+
+#############################################################
+## ADJUSTABLE PARAMETERS                                   ##
+#############################################################
+
+set systemName ./build/initial 
+set name RMSD.colvar
+set NO 0
+
+set outputName  $name.$NO
+if {$NO == 0} {
+  set inputName  $systemName
+} else {
+  set inputName  $systemName.$name.[expr $NO - 1]
+}
+
+structure   $systemName.psf
+coordinates $systemName.pdb
+outputName  $outputName
+
+set temperature		310     ;# K
+set minimize 		1000
+set time		50	;# ns
+set timestep		2	;# fs
+
+proc get_first_ts { xscfile } {
+	set fd [open $xscfile r]
+	gets $fd
+	gets $fd
+	gets $fd line
+	set ts [lindex $line 0]
+	close $fd
+	return $ts
+}
+
+if {$NO != 0} {
+	bincoordinates	$inputName.restart.coor
+	binvelocities	$inputName.restart.vel
+	set firsttime	[get_first_ts $inputName.restart.xsc]
+        extendedSystem  $inputName.restart.xsc
+} else {
+	set firsttime	0
+	temperature	$temperature
+        extendedSystem  $inputName.xsc
+}
+
+firsttimestep $firsttime
+
+#############################################################
+## SIMULATION PARAMETERS                                   ##
+#############################################################
+
+# Input
+paraTypeCharmm	on
+
+parameters             ./par/par_all36_prot.prm
+parameters             ./par/par_all36_lipid.prm
+parameters             ./par/toppar_water_ions.str
+parameters             ./par/par_allxx_sugar.inp
+
+wrapWater	on
+wrapAll	on
+
+
+# Force-Field Parameters
+exclude		scaled1-4
+1-4scaling	1.0
+cutoff		12.
+switching	on
+switchdist	10.
+pairlistdist	13.5
+
+
+# Integrator Parameters
+timestep	$timestep
+if {$timestep == 2} {
+	rigidBonds		all	;# needed for 2fs steps
+	nonbondedFreq		1
+	fullElectFrequency	2  
+	stepspercycle		10
+	restartfreq		5000	;# 500steps = every 1ps
+	dcdfreq			5000
+	xstFreq			5000
+	outputEnergies		100
+	outputPressure		100
+} else {
+	nonbondedFreq       2
+	fullElectFrequency  4
+	stepspercycle       20
+	restartfreq         1000	;# 1000steps = every 1ps
+	dcdfreq             1000
+	xstFreq             1000
+	outputEnergies      100
+	outputPressure      100
+}
+
+#PME (for full-system periodic electrostatics)
+if {1} {
+	PME                 yes
+	PMEGridSpacing      1
+}
+
+
+# Constant Temperature Control
+langevin            on    ;# do langevin dynamics
+langevinDamping     0.5   ;# damping coefficient (gamma) of 5/ps
+langevinTemp        $temperature
+langevinHydrogen    no    ;# don't couple langevin bath to hydrogens
+
+
+# Constant Pressure Control (variable volume)
+if {1} {
+	if {$timestep == 2} {
+          useGroupPressure	yes ;# needed for 2fs steps
+	} else {
+          useGroupPressure	no
+        }
+        useFlexibleCell		yes ;# no for water box, yes for membrane
+	useConstantArea		no ;# no for water box, yes for membrane
+
+	langevinPiston		on
+	langevinPistonTarget	1.01325 ;#  in bar -> 1 atm
+	langevinPistonPeriod	100.
+	langevinPistonDecay	50.
+	langevinPistonTemp	$temperature
+}
+
+
+# Fixed Atoms Constraint (set PDB beta-column to 1)
+if {0} {
+	fixedAtoms		on
+	fixedAtomsFile		$systemName.fix
+	fixedAtomsCol		O
+	fixedAtomsForces	off
+}
+
+
+#############################################################
+## EXTRA PARAMETERS                                        ##
+#############################################################
+
+# Put here any custom parameters that are specific to 
+# this job (e.g., SMD, TclForces, etc...)
+
+
+colvars on
+colvarsConfig colvar.config
+#colvarsInput  $inputName.restart.colvars.state
+
+#############################################################
+## EXECUTION SCRIPT                                        ##
+#############################################################
+
+# Minimization
+ 
+if {$firsttime < $minimize} {
+	minimize	[expr $minimize-$firsttime]
+	reinitvels	$temperature
+        run [expr int($time*1000000/$timestep)]	
+} else {
+	run [expr int($time*1000000/$timestep+$minimize-$firsttime)]
+}

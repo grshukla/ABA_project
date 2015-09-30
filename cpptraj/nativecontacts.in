@@ -1,0 +1,4 @@
+nativecontacts :55-69,87-94,98,114-126,147,165-173@CA writecontacts distance5.dat first distance 50
+
+sed -e 's/:\(.*\)@CA_/\1/' distance.dat | awk '{gsub("@CA", "");print}' | awk '!/@/'| awk '!/#/' | sed 's/:/    /' > distance1.dat
+

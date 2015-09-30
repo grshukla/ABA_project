@@ -92,7 +92,7 @@ g.close()
 from msmbuilder.featurizer import SuperposeFeaturizer
 import mdtraj as md
 from msmbuilder.cluster import KMeans
-
+from matplotlib import pyplot as plt
 
 for trajectory_file in ['1_output.mdcrd','2_output.mdcrd','3_output.mdcrd','4_output.mdcrd','5_output.mdcrd','6_output.mdcrd','7_output.mdcrd','8_output.mdcrd','9_output.mdcrd','10_output.mdcrd','11_output.mdcrd','12_output.mdcrd','13_output.mdcrd','14_output.mdcrd','15_output.mdcrd','16_output.mdcrd','17_output.mdcrd','18_output.mdcrd','19_output.mdcrd']:
     t = md.load(trajectory_file, top ='topology.pdb')
@@ -171,5 +171,7 @@ plt.ylabel('2nd tIC')
 plt.title('tICA Heatmap (log color scale)')
 plt.colorbar()
 plt.show()
+
+
 
 

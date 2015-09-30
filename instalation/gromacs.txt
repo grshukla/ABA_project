@@ -1,0 +1,36 @@
+##### Download the came binary
+##### Down load gromacs tar.gz file 
+
+tar -xvzf cmake-3.3.1-Linux-x86_64.tar.gz 
+tar -xvzf gromacs-5.1.tar.gz
+
+cd gromacs-5.1
+mkdir build-gromacs
+cd build-gromacs
+
+
+###### Go to .bashrc and make an alias of cmake and ccmake by following commands####
+lias cmake='/home/diwakar/softwares/cmake-3.3.1-Linux-x86_64/bin/cmake'
+alias ccmake='/home/diwakar/softwares/cmake-3.3.1-Linux-x86_64/bin/ccmake'
+####################################################################################
+
+######Building by cmake######################
+ 
+cmake ..
+
+cmake -DGMX_BUILD_OWN_FFTW=ON
+
+cmake .. -DGMX_GPU=ON -DGMX_MPI=ON -DCMAKE_INSTALL_PREFIX=/Directory/Where/to/install
+
+####### For CUDA #############################
+cmake .. -DGMX_GPU=ON -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda
+
+######## Configure in ccmake ########
+ccmake ..
+##### Then compile and generate in ccmake GUI#########
+
+
+cd ..
+
+make 
+make install

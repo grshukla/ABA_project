@@ -1,0 +1,3 @@
+################# COunting number of words in file  ################
+
+more res_holo.dat | tr ' ' '\n' | sort | uniq -c > holo.dat
