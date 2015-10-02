@@ -1,0 +1,2 @@
+#COnditional in one line
+x= "google" if 4>5 else "facebook"
