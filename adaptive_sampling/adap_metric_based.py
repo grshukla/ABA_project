@@ -4,13 +4,13 @@ import glob
 import os
 import cPickle as pickle
 import pandas as pd
-from msmbuilder.dataset import dataset
-import adptvSampling
 from sklearn.cluster import KMeans
 
 ##############################################################
 #User defined variables
 ##############################################################
+rec='pyl2'
+system='apo_aba'
 myn_clusters = 200                       # Total number of clusters
 from_clusters=5                          # Restart files making from clusters 
 frame_per_cluster=10                     # Number of frames extracted from each cluster
@@ -35,6 +35,8 @@ cluster.fit(dataset)
 
 centers=cluster.cluster_centers_
 centers=centers.reshape(myn_clusters)
+
+
 
 l=cluster.labels_
 n_cluster = cluster.n_clusters
@@ -101,3 +103,20 @@ f.write('for i in $(seq 1 '+ str(len(cpp_frm)) +'); do'+ '\n')
 f.write('	qsub res_${i}.pbs'+ '\n')
 f.write('done'+ '\n')
 f.close()
+
+################################################################
+#Ledger
+################################################################
+f = open('ledger.txt', 'w')
+f.write('Receptor is '+ rec + '\n')
+f.write('system is '+ sys + '\n')
+f.write('number of frames in trajectory is '+ str(len(dataset) + '\n')
+f.write('Total clusters made are '+ str(myn_clusters) + '\n')
+f.write('Frames per cluster selected '+ str(frame_per_cluster) + '\n')
+f.write('Frames are selected from first '+ str(from_clusters) + 'clusters'+ '\n')
+f.write('Cluster centers are given in acsending order' + str(centers[sorted_index]) + '\n')
+f.write('Indexes of these clusters are' + str(sorted_index) + '\n')
+f.write('frames selected are' + '\n' + str(cpp_frm) + + '\n' )
+f.close()
+
+
