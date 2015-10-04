@@ -10,7 +10,7 @@ from sklearn.cluster import KMeans
 #User defined variables
 ##############################################################
 rec='pyl2'
-system='apo_aba'
+sys='apo_aba'
 myn_clusters = 200                       # Total number of clusters
 from_clusters=5                          # Restart files making from clusters 
 frame_per_cluster=10                     # Number of frames extracted from each cluster
@@ -119,10 +119,10 @@ f.close()
 f = open('ledger.txt', 'w')
 f.write('Receptor is '+ rec + '\n')
 f.write('system is '+ sys + '\n')
-f.write('number of frames in trajectory is '+ str(len(dataset) + '\n')
-f.write('Total clusters made are '+ str(myn_clusters) + '\n')
-f.write('Frames per cluster selected '+ str(frame_per_cluster) + '\n')
-f.write('Frames are selected from first '+ str(from_clusters) + 'clusters'+ '\n')
+#f.write('number of frames in trajectory is '+ str(len(dataset) + '\n')
+#f.write('Total clusters made are '+ str(myn_clusters) + '\n')
+#f.write('Frames per cluster selected '+ str(frame_per_cluster) + '\n')
+#f.write('Frames are selected from first '+ str(from_clusters) + 'clusters'+ '\n')
 f.write('Cluster centers are given in acsending order' + str(centers[sorted_index]) + '\n')
 f.write('Indexes of these clusters are' + str(sorted_index) + '\n')
 f.write('frames selected are' + '\n' + str(cpp_frm) + + '\n' )
