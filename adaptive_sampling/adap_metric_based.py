@@ -97,7 +97,7 @@ for i in range(len(cpp_frm)):
 ################################################################
 f = open('submission_rst.sh', 'w')
 f.write('#!/bin/bash'+ '\n')
-f.write('for k in $(seq 1 '+ str(len(cpp_frm)) +'); do'+ '\n')
+f.write('for i in $(seq 1 '+ str(len(cpp_frm)) +'); do'+ '\n')
 f.write('	qsub res_${i}.pbs'+ '\n')
 f.write('done'+ '\n')
 f.close()
