@@ -1,0 +1,5 @@
+parm pyl10_apo_aba_r1_prot.top
+trajin pyl10_apo_aba_r1_prot.mdcrd
+distance PRO_GLY @1252 @1625 out pyl10_apo_distance.dat
+distance HIS_LEU @1651 @1692 out pyl10_apo_distance.dat
+distance LYS_ABA @794 @2729 out pyl10_apo_distance.dat
