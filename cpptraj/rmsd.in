@@ -1,0 +1,11 @@
+#################################################################
+#Aligning a protein with a different topology and calulating RMSD
+#################################################################
+parm TRAJ.top
+parm REF.pdb 
+reference REF.pdb parm REF.pdb [PDB]
+rmsd prot :1-154@CA ref [PDB] :25-178@CA out protein_rmsd.dat 
+#Aligning 1-154 residue CA atoms of trajectory with 25-178 residue of reference and finding out RMSD.
+
+ 
+
