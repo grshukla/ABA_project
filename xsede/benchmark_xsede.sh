@@ -1,5 +1,7 @@
 #!/bin/bash 
 
+# I have two topology files monomer.top and dimer.top in the current folder. and dimer.rst and monomer.rst are the 
+# restart files correspoding to topology.
 
 echo "production (500000 = 1ns)
 &cntrl
