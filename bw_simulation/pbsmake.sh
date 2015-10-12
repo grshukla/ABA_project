@@ -132,7 +132,7 @@ echo "#!/bin/bash
 #PBS -q cse
 #PBS -W group_list=chbe_diwakar
 
-cd ${dir}/analysis
+cd /home/sshukla4/scratch/newsim/${rec}/${sys}/prod/round${round}/analysis
 /projects/cse/shared/diwakar/diwakar_software/amber14/bin/cpptraj -i combine_cpptraj.in" >> combine.pbs
 
 
@@ -143,6 +143,7 @@ echo "#!/bin/bash
 #PBS -q cse
 #PBS -W group_list=chbe_diwakar
 
-cd ${dir}/analysis
+cd /home/sshukla4/scratch/newsim/${rec}/${sys}/prod/round${round}/analysis
+
 /projects/cse/shared/diwakar/diwakar_software/amber14/bin/cpptraj -i strip_cpptraj.in" >> strip.pbs
 
