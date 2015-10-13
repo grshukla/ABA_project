@@ -94,7 +94,7 @@ cd analysis
 ######################################################################
 #######CPPtraj file for strpping and combining all trajectories#######
 ######################################################################
-echo "parm ../${system}.top"  >> strip_cpptraj.in
+echo "parm ../${sys}.top"  >> strip_cpptraj.in
 
 for i in $(seq 1 $par); do
 	for j in $(seq 1 $sim); do 
@@ -111,7 +111,7 @@ echo "trajout ${rec}_${sys}_r${round}_stripped.mdcrd"  >> strip_cpptraj.in
 #######CPPtraj file for  combining all trajectories###################
 ######################################################################
 
-echo "parm ../${system}.top"  >> combine_cpptraj.in
+echo "parm ../${sys}.top"  >> combine_cpptraj.in
 
 for i in $(seq 1 $par); do
         for j in $(seq 1 $sim); do
