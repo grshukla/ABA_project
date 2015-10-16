@@ -44,6 +44,25 @@ for i in range(0, len(page_index)):
 
 
 
+####################################################
+#Script for extracting info from PPTB Database
+####################################################
+links=[]
+
+for link in soup.find_all('a'):
+    links.append(str(link.get('href')))
+
+links=[s for s in links if "Reports/" in s]
+
+CAS2=[]
+for i in range(0,len(links)):
+	html2=urllib2.urlopen('http://sitem.herts.ac.uk/aeru/ppdb/en/'+str(links[i]))
+	soup2=BS(html2)
+	temp2=soup2.body.contents[7].contents[1].contents[24].contents[8].contents[3].contents[0].renderContents()
+	CAS2=CAS2+temp2
+
+
+
 #####################################################
 #This is a script to download structures from PubChem
 #based on their CAS numbers
@@ -60,3 +79,26 @@ for i in range(0,len(CASs)):
 	except KeyError:
 		pass
 	#data=data+temp
+
+
+#####################################################
+#Fetching molecular properties from pubchem
+#JSON structure file
+####################################################
+page=req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/3672/record/JSON/?record_type=2d&response_type=display')
+
+content=page.json()
+
+#E_complexity
+content['PC_Compounds'][0]['props'][1]['value']['fval']
+
+#HBA
+content['PC_Compounds'][0]['props'][2]['value']['ival']
+
+#HBD
+content['PC_Compounds'][0]['props'][3]['value']['ival']
+
+#Rotatable bonds
+content['PC_Compounds'][0]['props'][4]['value']['ival']
+
+
