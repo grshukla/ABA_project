@@ -5,7 +5,7 @@
 import urllib2
 from bs4 import BeautifulSoup as BS
 import requests as req     # requests and urllib2 do the same things. 
-
+import re
 
 ####################################################
 #Script for extracting info from a html table
@@ -47,6 +47,10 @@ for i in range(0, len(page_index)):
 ####################################################
 #Script for extracting info from PPTB Database
 ####################################################
+html=urllib2.urlopen('http://sitem.herts.ac.uk/aeru/ppdb/en/atoz.htm')
+
+soup=BS(html)
+
 links=[]
 
 for link in soup.find_all('a'):
@@ -58,7 +62,8 @@ CAS2=[]
 for i in range(0,len(links)):
 	html2=urllib2.urlopen('http://sitem.herts.ac.uk/aeru/ppdb/en/'+str(links[i]))
 	soup2=BS(html2)
-	temp2=soup2.body.contents[7].contents[1].contents[24].contents[8].contents[3].contents[0].renderContents()
+	temp2=[a.parent.next_sibling.next_sibling.get_text() for a in soup2.find_all('font') if a.string==u'             CAS RN        ']
+	temp2=[str(x).strip() for x in temp2]
 	CAS2=CAS2+temp2
 
 
