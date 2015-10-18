@@ -98,22 +98,17 @@ for i in range(0,len(CAS_final)):
 #Fetching molecular properties from pubchem
 #JSON structure file
 ####################################################
-page=req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/3672/record/JSON/?record_type=2d&response_type=display')
-
-page=req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/'+str(CID[i])+'/record/JSON/?record_type=2d&response_type=display')
-
-content=page.json()
-
-#E_complexity
-content['PC_Compounds'][0]['props'][1]['value']['fval']
-
-#HBA
-content['PC_Compounds'][0]['props'][2]['value']['ival']
-
-#HBD
-content['PC_Compounds'][0]['props'][3]['value']['ival']
-
-#Rotatable bonds
-content['PC_Compounds'][0]['props'][4]['value']['ival']
+#page=req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/3672/record/JSON/?record_type=2d&response_type=display')
+for i in range(0,len(data)):
+	page=req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/'+str(data[i])+'/record/JSON/?record_type=2d&response_type=display')
+	content=page.json()
+	#E_complexity
+	content['PC_Compounds'][0]['props'][1]['value']['fval']
+	#HBA
+	content['PC_Compounds'][0]['props'][2]['value']['ival']
+	#HBD
+	content['PC_Compounds'][0]['props'][3]['value']['ival']
+	#Rotatable bonds
+	content['PC_Compounds'][0]['props'][4]['value']['ival']
 
 
