@@ -95,6 +95,8 @@ for i in range(0,len(CASs)):
 ####################################################
 page=req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/3672/record/JSON/?record_type=2d&response_type=display')
 
+page=req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/'+str(CID[i])+'/record/JSON/?record_type=2d&response_type=display')
+
 content=page.json()
 
 #E_complexity
