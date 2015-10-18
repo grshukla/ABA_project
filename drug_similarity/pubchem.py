@@ -76,6 +76,9 @@ for i in range(0,len(links)):
 #based on their CAS numbers
 ####################################################
 CAS_final=CASs+CAS2
+CAS_final=set(CAS_final)
+CAS_final=list(CAS_final)
+
 
 
 data=[]
