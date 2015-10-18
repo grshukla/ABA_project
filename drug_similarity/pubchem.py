@@ -84,7 +84,7 @@ CAS_final=list(CAS_final)
 data=[]
 for i in range(0,len(CAS_final)):
 	try:
-		page = req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+str(CASs[i])+'/cids/JSON')
+		page = req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+str(CAS_final[i])+'/cids/JSON')
 		content = page.json()
 		temp=content['IdentifierList']['CID']
 		print temp
