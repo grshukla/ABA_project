@@ -75,9 +75,11 @@ for i in range(0,len(links)):
 #This is a script to download structures from PubChem
 #based on their CAS numbers
 ####################################################
+CAS_final=CASs+CAS2
+
 
 data=[]
-for i in range(0,len(CASs)):
+for i in range(0,len(CAS_final)):
 	try:
 		page = req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+str(CASs[i])+'/cids/JSON')
 		content = page.json()
