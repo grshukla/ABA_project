@@ -60,11 +60,14 @@ links=[s for s in links if "Reports/" in s]
 
 CAS2=[]
 for i in range(0,len(links)):
-	html2=urllib2.urlopen('http://sitem.herts.ac.uk/aeru/ppdb/en/'+str(links[i]))
-	soup2=BS(html2)
-	temp2=[a.parent.next_sibling.next_sibling.get_text() for a in soup2.find_all('font') if a.string==u'             CAS RN        ']
-	temp2=[str(x).strip() for x in temp2]
-	CAS2=CAS2+temp2
+	try:
+		html2=urllib2.urlopen('http://sitem.herts.ac.uk/aeru/ppdb/en/'+str(links[i]))
+		soup2=BS(html2)
+		temp2=[a.parent.next_sibling.next_sibling.get_text() for a in soup2.find_all('font') if a.string==u'             CAS RN        ']
+		temp2=[str(x).strip() for x in temp2]
+		CAS2=CAS2+temp2
+	except UnicodeEncodeError:
+		pass
 
 
 
