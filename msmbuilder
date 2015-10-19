@@ -65,7 +65,7 @@ for trajectory_file in ['1_output.mdcrd','2_output.mdcrd','3_output.mdcrd','4_ou
     dataset.append(phi)
 
 import pickle
-f = open('dataset.pkl','wb’)
+f = open('dataset.pkl','wb')
 pickle.dump(dataset,f)
 f.close()
 
@@ -74,7 +74,7 @@ from msmbuilder.cluster import KMeans
 cluster = KMeans(n_clusters=10)
 cluster.fit(dataset)
 
-g= open('cluster.pkl', ‘rb’)
+g= open('cluster.pkl', 'rb')
 cluster=pickle.load(g)
 g.close()
 
