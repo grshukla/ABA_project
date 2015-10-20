@@ -87,8 +87,8 @@ for i in range(0,len(CAS_final)):
 		page = req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+str(CAS_final[i])+'/cids/JSON')
 		content = page.json()
 		temp=content['IdentifierList']['CID']
-		print temp
-		data = data +temp
+		print temp[0]
+		data.append(temp[0])
 	except KeyError:
 		pass
 	#data=data+temp
@@ -110,5 +110,46 @@ for i in range(0,len(data)):
 	content['PC_Compounds'][0]['props'][3]['value']['ival']
 	#Rotatable bonds
 	content['PC_Compounds'][0]['props'][4]['value']['ival']
+	#InChI
+	content['PC_Compounds'][0]['props'][11]['value']['sval']
+	#Log(P)
+	content['PC_Compounds'][0]['props'][13]['value']['fval']
+	#Mass
+	content['PC_Compounds'][0]['props'][14]['value']['fval']
+	#Molecular Formula 
+	content['PC_Compounds'][0]['props'][15]['value']['sval']
+	#Simles (Canonical)
+	content['PC_Compounds'][0]['props'][17]['value']['sval']
+	#Smiles (Isomeric)
+	content['PC_Compounds'][0]['props'][18]['value']['sval']
+	#Polar surface area
+	content['PC_Compounds'][0]['props'][19]['value']['fval']
+	#Heavy atom Count
+	content['PC_Compounds'][0]['count']['heavy_atom']
+	#chiral Atom
+	content['PC_Compounds'][0]['count']['atom_chiral']
+	#number of tautomers 
+	content['PC_Compounds'][0]['count']['tautomers']
 
+
+
+key_error=[]
+for i in range(0,len(data)):
+	try:
+        	page=req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/'+str(data[i])+'/record/JSON/?record_type=2d&response_type=display')
+        	content=page.json()
+		prop_matrix[i,0]=content['PC_Compounds'][0]['props'][14]['value']['fval']  #MW
+		prop_matrix[i,1]=content['PC_Compounds'][0]['props'][13]['value']['fval']  #Log(P)
+		prop_matrix[i,2]=content['PC_Compounds'][0]['props'][3]['value']['ival']   #HBD
+		prop_matrix[i,3]=content['PC_Compounds'][0]['props'][2]['value']['ival']  #HBA
+		prop_matrix[i,4]=content['PC_Compounds'][0]['props'][19]['value']['fval']  #ROTB
+		prop_matrix[i,5]=content['PC_Compounds'][0]['props'][4]['value']['ival']  #PSA
+	except KeyError:
+		#key_error=key_error.append(i)
+		print "Key error in %r" %i
+		pass
+	except IndexError:
+		pass
+
+prop_matrix=prop_matrix[~np.all(prop_matrix == 0, axis=1)]
 
