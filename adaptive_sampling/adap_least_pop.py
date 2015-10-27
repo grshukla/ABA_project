@@ -9,14 +9,14 @@ import pandas as pd
 #User defined variables
 ##############################################################
 rec='pyl2'
-sys='apo_aba'
+sys='holo_aba'
 myn_clusters = 200                       # Total number of clusters
-from_clusters=5                          # Restart files making from clusters 
-frame_per_cluster=10                     # Number of frames extracted from each cluster
-traj_name='apo_aba_with_water.mdcrd'     
-top_name='apo_aba.top'
-path='/home/sshukla4/scratch/newsim/pyl10/apo_aba/prod/round1/combined_traj'
-d_file_name='lys_aba_distance.dat'
+from_clusters=50                          # Restart files making from clusters 
+frame_per_cluster=1                     # Number of frames extracted from each cluster
+traj_name='holo_aba_with_water.mdcrd'     
+top_name='holo_aba.top'
+path='/home/sshukla4/scratch/newsim/pyl2/holo_aba/prod/round1/combined_traj'
+d_file_name='loop_rmsd_pyl2_holo.dat'
 
 
 ################################################################
@@ -50,10 +50,7 @@ frames=[]
 for i in range(from_clusters):
 	frame_index=np.where(l==sorted_index[i])
 	frame_index=np.array(frame_index)
-	frame_length=len(frame_index[0])
-	frame_index.resize(frame_length)
-	frames.append(frame_index[0:frame_per_cluster].tolist())
-	
+	frames.append(frame_index[0][i].tolist())	
 
 frames=np.array(frames).reshape(from_clusters*frame_per_cluster)
 cpp_frm=frames+1
@@ -61,7 +58,7 @@ cpp_frm=frames+1
 ################################################################
 #Saving the trajectory number matrix
 ################################################################
-f = open('frames.pkl','wb’)
+f = open('frames.pkl','wb')
 pickle.dump(cpp_frm,f)
 f.close()
 
