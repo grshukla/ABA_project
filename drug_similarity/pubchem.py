@@ -157,13 +157,65 @@ prop_matrix=prop_matrix[~np.all(prop_matrix == 0, axis=1)]
 
 
 #########Downloading Smile strings########################
-smiles=np.zeros(len(data),1)
+smiles=[]
 for i in range(0,len(data)):
         try:
                 page=req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/'+str(data[i])+'/record/JSON/?record_type=2d&response_type=display')
                 content=page.json()
-		smiles[i,0]=content['PC_Compounds'][0]['props'][17]['value']['sval']
+		smiles.append(str(content['PC_Compounds'][0]['props'][17]['value']['sval']))
 	except KeyError:
 		pass
 	except IndexError:
 		pass
+
+g=open('smiles.pkl','wb')
+pkl.dump(smiles,g)
+g.close()
+
+
+################# Properties from Smile ####################
+from rdkit import Chem
+from rdkit.Chem import Descriptors
+
+ar_rings=[]
+al_rings=[]
+hv_atoms=[]
+mw_hv_atoms=[]
+ht_atoms=[]
+val_elec=[]
+rings=[]
+sp3_c=[]
+
+
+for i in range(0,len(smiles)):
+	try:
+		m = Chem.MolFromSmiles(smiles[i])
+		ar_rings.append(Descriptors.NumAromaticRings(m))
+		al_rings.append(Descriptors.NumAliphaticRings(m))
+		hv_atoms.append(Descriptors.HeavyAtomCount(m))	
+		mw_hv_atoms.append(Descriptors.HeavyAtomMolWt(m))
+		ht_atoms.append(Descriptors.NumHeteroatoms(m))
+		val_elec.append(Descriptors.NumValenceElectrons(m))
+		rings.append(Descriptors.RingCount(m))
+		sp3_c.append(Descriptors.FractionCSP3(m))
+		print i
+	except BaseException:
+		pass
+
+
+smiles_matrix=np.zeros((4480,8))
+smiles_matrix[:,0]=np.array(ar_rings)
+smiles_matrix[:,2]=np.array(hv_atoms)
+smiles_matrix[:,3]=np.array(mw_hv_atoms)
+smiles_matrix[:,4]=np.array(ht_atoms)
+smiles_matrix[:,5]=np.array(val_elec)
+smiles_matrix[:,6]=np.arra(rings)
+smiles_matrix[:,6]=np.array(rings)
+smiles_matrix[:,7]=np.array(sp3_c)
+
+
+import pickle
+f = open('smiles_matrix.pkl','wb')
+pickle.dump(smiles_matrix,f)
+f.close()
+
