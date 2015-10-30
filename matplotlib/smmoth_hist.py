@@ -115,5 +115,19 @@ plt.show()
 
 ####################### Cmparison of HBA and HBD ###################
 
+plt.subplot(1,2,1)
+sns.distplot(prop_matrix[:,2], color="lightskyblue",bins=20, kde=True, kde_kws={"color": "k", "bw": "0.4"})
+plt.xlim(0,12)
+plt.xlabel('HBD',fontsize=20)
+plt.ylabel('Density',fontsize=20)
+plt.xticks(fontsize = 15)
+plt.yticks(fontsize = 15)
 
+
+plt.subplot(1,2,2)
+sns.distplot(prop_matrix[:,3], color="lightskyblue",bins=20, kde=True, kde_kws={"color": "k", "bw":"0.5"})
+plt.xlim(0,18)
+plt.xlabel('HBA',fontsize=20)
+plt.xticks(fontsize = 15)
+plt.yticks(fontsize = 15)
 
