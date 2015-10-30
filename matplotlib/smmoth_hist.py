@@ -3,14 +3,18 @@ import numpy as np
 import cPickle as pkl
 from matplotlib import pyplot as plt
 
+cd ~/Dropbox/drug_project/
+
 g= open('prop_matrix.pkl', 'rb')
 prop_matrix=pkl.load(g)
 g.close()
 
-MW=prop_matrix[:,0]
+g= open('smiles_matrix.pkl', 'rb')
+smiles_matrix=pkl.load(g)
+g.close()
 
 plt.subplot(2,3,1)
-sns.distplot(MW, color="lightskyblue",bins=20, kde=True, kde_kws={"color": "k"})
+sns.distplot(prop_matrix[:,0], color="lightskyblue",bins=20, kde=True, kde_kws={"color": "k"})
 plt.xlim(0,1000)
 plt.xlabel('MW',fontsize=20)
 plt.ylabel('Density',fontsize=20)
