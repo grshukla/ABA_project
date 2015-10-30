@@ -12,26 +12,34 @@ MW=prop_matrix[:,0]
 plt.subplot(2,3,1)
 sns.distplot(MW, color="lightskyblue",bins=20, kde=True, kde_kws={"color": "k"})
 plt.xlim(0,1000)
+plt.xlabel('MW',fontsize=20)
+plt.ylabel('Density',fontsize=20)
 
 plt.subplot(2,3,2)
-sns.distplot(prop_matrix[:,1], color="lightskyblue",bins=500, kde=True, kde_kws={"color": "k"})
+sns.distplot(prop_matrix[:,1], color="lightskyblue",bins=300, kde=True, kde_kws={"color": "k","bw": "0.1"})
 plt.xlim(-8,10)
+plt.xlabel('Log(P)',fontsize=20)
 
 plt.subplot(2,3,3)
-sns.distplot(prop_matrix[:,2], color="lightskyblue",bins=20, kde=True, kde_kws={"color": "k"})
+sns.distplot(prop_matrix[:,2], color="lightskyblue",bins=20, kde=True, kde_kws={"color": "k", "bw": "0.4"})
 plt.xlim(0,12)
+plt.xlabel('HBD',fontsize=20)
 
 plt.subplot(2,3,4)
-sns.distplot(prop_matrix[:,3], color="lightskyblue",bins=20, kde=True, kde_kws={"color": "k"})
+sns.distplot(prop_matrix[:,3], color="lightskyblue",bins=20, kde=True, kde_kws={"color": "k", "bw":"0.5"})
 plt.xlim(0,18)
+plt.xlabel('HBA',fontsize=20)
+plt.ylabel('Density',fontsize=20)
 
 plt.subplot(2,3,5)
-sns.distplot(prop_matrix[:,4], color="lightskyblue",bins=20, kde=True, kde_kws={"color": "k"})
+sns.distplot(prop_matrix[:,4], color="lightskyblue",bins=30, kde=True, kde_kws={"color": "k"})
 plt.xlim(0,300)
+plt.xlabel('ROTB',fontsize=20)
 
 plt.subplot(2,3,6)
-sns.distplot(prop_matrix[:,5], color="lightskyblue",bins=20, kde=True, kde_kws={"color": "k"})
+sns.distplot(prop_matrix[:,5], color="lightskyblue",bins=70, kde=True, kde_kws={"color": "k"})
 plt.xlim(0,25)
+plt.xlabel('PSA',fontsize=20)
 
 plt.show()
 
