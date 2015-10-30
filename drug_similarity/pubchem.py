@@ -153,3 +153,17 @@ for i in range(0,len(data)):
 
 prop_matrix=prop_matrix[~np.all(prop_matrix == 0, axis=1)]
 
+
+
+
+#########Downloading Smile strings########################
+smiles=np.zeros(len(data),1)
+for i in range(0,len(data)):
+        try:
+                page=req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/'+str(data[i])+'/record/JSON/?record_type=2d&response_type=display')
+                content=page.json()
+		smiles[i,0]=content['PC_Compounds'][0]['props'][17]['value']['sval']
+	except KeyError:
+		pass
+	except IndexError:
+		pass
