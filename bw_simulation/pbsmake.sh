@@ -147,3 +147,35 @@ cd /home/sshukla4/scratch/newsim/${rec}/${sys}/prod/round${round}/analysis
 
 /projects/cse/shared/diwakar/diwakar_software/amber14/bin/cpptraj -i strip_cpptraj.in" >> strip.pbs
 
+
+######################################################################
+#######CPPTRAJ featurization##########################################
+######################################################################
+if [ "$rec" = pyl10 ]; then
+        if [ "$sys" = "apo_aba" ]; then
+                echo "parm stripped.apo_aba.top" >> aba_site_pyl0_apo.in
+                echo "trajin pyl10_apo_aba_r${round}_stripped.mdcrd" >> aba_site_pyl0_apo.in
+                echo "distance PRO_GLY @1251 @1624 out pyl10_apo_distance.dat" >> aba_site_pyl0_apo.in
+                echo "distance HIS_LEU @1650 @1691 out pyl10_apo_distance.dat" >> aba_site_pyl0_apo.in
+                echo "distance LYS_ABA @793 @2728 out pyl10_apo_distance.dat" >> aba_site_pyl0_apo.in
+        else
+                echo "parm stripped.holo_aba.top" >> loop_rmsd_pyl10_holo.in
+                echo "trajin pyl10_holo_aba_r${round}_stripped.mdcrd" >> loop_rmsd_pyl10_holo.in
+                echo "rmsd :1-154 first" >> loop_rmsd_pyl10_holo.in
+                echo "rmsd :23-37,55-62,66,82-94,113,131-139 first nofit out loop_rmsd_pyl10_holo.dat" >> loop_rmsd_pyl10_holo.in
+        fi
+else
+        if [ "$sys" = "apo_aba" ]; then
+                echo "parm stripped.apo_aba.top" >>aba_site_pyl2_apo.in
+                echo "trajin pyl2_apo_aba_r${round}_stripped.mdcrd" >> aba_site_pyl2_apo.in
+                echo "distance PRO_GLY @1439 @1813 out pyl2_apo_distance.dat" >> aba_site_pyl2_apo.in
+                echo "distance HIS_LEU @1842 @1883 out pyl2_apo_distance.dat" >> aba_site_pyl2_apo.in
+                echo "distance LYS_ABA @997 @5856 out pyl2_apo_distance.dat" >> aba_site_pyl2_apo.in
+
+        else
+                echo "parm stripped.holo_aba.top" >> loop_rmsd_pyl2_holo.in
+                echo "trajin pyl2_holo_aba_r${round}_stripped.mdcrd" >> loop_rmsd_pyl2_holo.in
+                echo "rmsd :1-181 first" >> loop_rmsd_pyl2_holo.in
+                echo "rmsd :49-63,81-88,92,108-120,141,159-167 first nofit out loop_rmsd_pyl2_holo.dat" >> loop_rmsd_pyl2_holo.in
+        fi
+fi
