@@ -66,7 +66,7 @@ cpp_frm=frames+1
 ################################################################
 #Saving the trajectory number matrix
 ################################################################
-f = open('frames.pkl','wb’)
+f = open('frames.pkl','wb')
 pickle.dump(cpp_frm,f)
 f.close()
 
