@@ -1,0 +1,4 @@
+parm holo_aba_stripped.top
+trajin holo_aba_stripped.mdcrd
+rmsd :1-181 first
+rmsd :49-63,81-88,92,108-120,141,159-167 first nofit out loop_rmsd_pyl2_holo.dat
