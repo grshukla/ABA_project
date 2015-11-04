@@ -5,8 +5,27 @@ sys=apo_aba #name of system, name of topology file
 par=50        #How many parallel simulation have to be launched
 dir=/Users/Saurabh/mastersim/script_repository/bw_simulation
 sim=3        #How many sequencial simulations are launched in one sequence
-nsteps=30000000       #number of steps the simulation must be run
 round=2
+
+
+
+if [ "$rec" = pyl10 ]; then
+        if [ "$sys" = "apo_aba" ]; then
+		nsteps=15000000
+        else
+        	nsteps=25000000
+	fi
+else
+        if [ "$sys" = "apo_aba" ]; then
+		nsteps=8000000
+        else
+        	nsteps=22500000
+	fi
+fi
+
+
+
+
 
 mkdir pbs_scripts rst_files run_folder traj_files input_files analysis
 
