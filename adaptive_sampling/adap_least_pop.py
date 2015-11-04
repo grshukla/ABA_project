@@ -50,7 +50,7 @@ frames=[]
 for i in range(from_clusters):
 	frame_index=np.where(l==sorted_index[i])
 	frame_index=np.array(frame_index)
-	frames.append(frame_index[0][i].tolist())	
+	frames.append(frame_index[0][0].tolist())	
 
 frames=np.array(frames).reshape(from_clusters*frame_per_cluster)
 cpp_frm=frames+1
