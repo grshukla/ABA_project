@@ -95,5 +95,3 @@ echo \$three" >> qsub.sh
 
 bash qsub.sh
 
-
-bash qsub.sh
