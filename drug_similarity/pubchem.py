@@ -209,7 +209,6 @@ smiles_matrix[:,2]=np.array(hv_atoms)
 smiles_matrix[:,3]=np.array(mw_hv_atoms)
 smiles_matrix[:,4]=np.array(ht_atoms)
 smiles_matrix[:,5]=np.array(val_elec)
-smiles_matrix[:,6]=np.arra(rings)
 smiles_matrix[:,6]=np.array(rings)
 smiles_matrix[:,7]=np.array(sp3_c)
 
