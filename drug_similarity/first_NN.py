@@ -28,7 +28,7 @@ h_2=tf.nn.relu(tf.matmul(h_1,w_l2) + b_l2)
 keep_prob = tf.placeholder("float")
 h_2_dropout=tf.nn.dropout(h_2, keep_prob)
 
-#Readout Layer
+#Readout Layer (Binary output)
 w_l3=weight_variable([10,2])
 b_l3=bias_variable([2])
 y_model=tf.nn.softmax(tf.matmul(h_2_dropout,w_l3) + b_l3)
