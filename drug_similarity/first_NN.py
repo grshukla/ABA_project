@@ -24,10 +24,14 @@ w_l2=weight_variable([100,10])
 b_l2=bias_variable([10])
 h_2=tf.nn.relu(tf.matmul(h_1,w_l2) + b_l2)
 
+#Applying the dropout to redout layer
+keep_prob = tf.placeholder("float")
+h_2_dropout=tf.nn.dropout(h_fc1, keep_prob)
+
 #Readout Layer
 w_l3=weight_variable([10,2])
 b_l3=bias_variable([2])
-y_model=tf.nn.softmax(tf.matmul(h_2,w_l3) + b_l3)
+y_model=tf.nn.softmax(tf.matmul(h_2_dropout,w_l3) + b_l3)
 
 #Training the model
 cross_entropy = -tf.reduce_sum(y*tf.log(y_model))
