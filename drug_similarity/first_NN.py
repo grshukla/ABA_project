@@ -53,6 +53,7 @@ print sess.run(accuracy, feed_dict={x: x_data, y: y_data})
 
 #For visualizing
 #://stackoverflow.com/questions/33783672/how-can-i-visualize-the-weightsvariables-in-cnn-in-tensorflow
+#http://stackoverflow.com/questions/33772833/error-while-merging-summaries-for-tensorboard
 
 
 
