@@ -43,10 +43,10 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
 
 #Running the iterations
 sess.run(tf.initialize_all_variables())
-for i in range(1000):
+for i in range(10000):
   #sess.run(train_step, feed_dict={x: x_data, y: y_data, keep_prob: 0.25})
   sess.run(train_step, feed_dict={x: x_data, y: y_data})
-  print sess.run(w_l1[0,0]),sess.run(w_l2[0,0])
+  #print sess.run(w_l1[0,0]),sess.run(w_l2[0,0])
   
 print sess.run(accuracy, feed_dict={x: x_data, y: y_data})
 
