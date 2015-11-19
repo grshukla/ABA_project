@@ -35,8 +35,9 @@ b_l3=bias_variable([2])
 y_model=tf.nn.softmax(tf.matmul(h_2_dropout,w_l3) + b_l3)
 
 #Training the model
-cross_entropy = -tf.reduce_sum(y*tf.log(y_model))
-train_step = tf.train.GradientDescentOptimizer(0.01).minimize(cross_entropy)
+#cross_entropy = -tf.reduce_sum(y*tf.log(y_model))
+loss = tf.reduce_mean(tf.square(y - y_model))
+train_step = tf.train.GradientDescentOptimizer(0.01).minimize(loss)
 correct_prediction = tf.equal(tf.argmax(y_model,1), tf.argmax(y,1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
 
@@ -45,6 +46,7 @@ sess.run(tf.initialize_all_variables())
 for i in range(1000):
   #sess.run(train_step, feed_dict={x: x_data, y: y_data, keep_prob: 0.25})
   sess.run(train_step, feed_dict={x: x_data, y: y_data})
+  print sess.run(w_l1[0,0]),sess.run(w_l2[0,0])
   
 print sess.run(accuracy, feed_dict={x: x_data, y: y_data})
 
