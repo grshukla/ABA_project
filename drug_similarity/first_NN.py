@@ -51,7 +51,8 @@ for i in range(100000):
   
 print sess.run(accuracy, feed_dict={x: x_data, y: y_data})
 
-
+#For visualizing
+#://stackoverflow.com/questions/33783672/how-can-i-visualize-the-weightsvariables-in-cnn-in-tensorflow
 
 
 
