@@ -17,13 +17,13 @@ def bias_variable(shape):
 #First Layer (10 Nodes)
 w_l1=weight_variable([1024,10])
 b_l1=bias_variable([10])
-h_1=tf.sigmoid(tf.matmul(x,w_l1) + b_l1)
+h_1=tf.nn.relu(tf.matmul(x,w_l1) + b_l1)
 
 #Second Layer (5 Nodes)
 w_l2=weight_variable([10,5])
 b_l2=bias_variable([5])
 #h_2=tf.sigmoid(tf.matmul(h_1,w_l2) + b_l2)
-h_2_dropout=tf.sigmoid(tf.matmul(h_1,w_l2) + b_l2)
+h_2_dropout=tf.nn.relu(tf.matmul(h_1,w_l2) + b_l2)
 
 #Applying the dropout to redout layer
 #keep_prob = tf.placeholder("float")
@@ -43,7 +43,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
 
 #Running the iterations
 sess.run(tf.initialize_all_variables())
-for i in range(10000):
+for i in range(100):
   #sess.run(train_step, feed_dict={x: x_data, y: y_data, keep_prob: 0.25})
   sess.run(train_step, feed_dict={x: x_data, y: y_data})
   print sess.run(w_l3[0,:])
