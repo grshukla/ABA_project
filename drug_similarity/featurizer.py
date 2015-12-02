@@ -16,7 +16,6 @@ def phys_featurizer(s):
   
   #Featurization begins
   phys_features.append(Descriptors.BertzCT(m))
-  phys_features.append(Descriptors.Chem(m)) 
   phys_features.append(Descriptors.Chi0(m))
   phys_features.append(Descriptors.Chi0n(m))
   phys_features.append(Descriptors.Chi0v(m))
@@ -126,8 +125,6 @@ def phys_featurizer(s):
   phys_features.append(Descriptors.VSA_EState7(m))
   phys_features.append(Descriptors.VSA_EState8(m))
   phys_features.append(Descriptors.VSA_EState9(m))
-  phys_features.append(Descriptors.collections(m))
-  phys_features.append(Descriptors.descList(m))
   phys_features.append(Descriptors.fr_Al_COO(m))
   phys_features.append(Descriptors.fr_Al_OH(m))
   phys_features.append(Descriptors.fr_Al_OH_noTert(m))
@@ -213,6 +210,5 @@ def phys_featurizer(s):
   phys_features.append(Descriptors.fr_thiophene(m))
   phys_features.append(Descriptors.fr_unbrch_alkane(m))
   phys_features.append(Descriptors.fr_urea(m))
-  phys_features.append(Descriptors.rdPartialCharges(m))
   
   return phys_features
