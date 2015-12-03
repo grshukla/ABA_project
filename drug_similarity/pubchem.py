@@ -224,6 +224,7 @@ f.close()
 # CAS to smiles through Zinc database
 ##################################################
 #CAS is the list containg  CAS numbers
+#http://wiki.bkslab.org/index.php/How_to_link_to_ZINC
 
 smiles=[]
 
