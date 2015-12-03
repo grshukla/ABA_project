@@ -87,11 +87,12 @@ for i in range(0,len(CAS_final)):
 		page = req.get('https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/'+str(CAS_final[i])+'/cids/JSON')
 		content = page.json()
 		temp=content['IdentifierList']['CID']
-		print temp[0]
+		#print temp[0]
 		data.append(temp[0])
 	except KeyError:
 		pass
 	#data=data+temp
+
 
 
 #####################################################
@@ -217,4 +218,19 @@ import pickle
 f = open('smiles_matrix.pkl','wb')
 pickle.dump(smiles_matrix,f)
 f.close()
+
+
+##################################################
+# CAS to smiles through Zinc database
+##################################################
+#CAS is the list containg  CAS numbers
+
+smiles=[]
+
+for i in range(0,len(CAS)):
+	page=req.get('http://zinc.docking.org/cas/'+str(CAS[i])+'.smi')
+	content=page.content
+	print content
+	
+
 
