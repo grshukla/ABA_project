@@ -10,10 +10,10 @@ from rdkit.Chem import GraphDescriptors
 # Function for physicochemical featurization matrix of a smile string#
 ######################################################################
 
-phys_features=[]
+
 def phys_featurizer(s):
   m=Chem.MolFromSmiles(s)
-  
+  phys_features=[]
   #Featurization begins
   phys_features.append(Descriptors.BertzCT(m))
   phys_features.append(Descriptors.Chi0(m))
@@ -212,3 +212,10 @@ def phys_featurizer(s):
   phys_features.append(Descriptors.fr_urea(m))
   
   return phys_features
+  
+  
+#Input is the list of smile strings
+def feature_matrix(smiles):
+  for i in range(0,len(smiles)):
+    a= phys_featurizer(smiles[i])
+    
