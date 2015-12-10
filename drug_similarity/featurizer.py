@@ -5,6 +5,8 @@ from rdkit.Chem import AllChem
 from rdkit.Chem import Descriptors
 from rdkit.Chem import Fragments
 from rdkit.Chem import GraphDescriptors
+import numpy as np
+import cPickle as pkl
 
 ######################################################################
 # Function for physicochemical featurization matrix of a smile string#
