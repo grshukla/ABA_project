@@ -215,12 +215,12 @@ def phys_featurizer(s):
   
   
 #Input is the list of smile strings
+#Input is the list of smile strings
 def feature_matrix(smiles):
   a= phys_featurizer(smiles[0])
   for i in range(1,len(smiles)):
-    print i
     b = phys_featurizer(smiles[i])
     c = np.row_stack((np.array(a),np.array(b)))
     a=c
-    return a
+  return a
     
