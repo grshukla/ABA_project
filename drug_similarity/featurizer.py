@@ -221,5 +221,6 @@ def feature_matrix(smiles):
     print i
     b = phys_featurizer(smiles[i])
     c = np.row_stack((np.array(a),np.array(b)))
-    return c
+    a=c
+    return a
     
