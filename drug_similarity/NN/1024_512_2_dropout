@@ -43,3 +43,6 @@ for i in range(200):
   
   
 print sess.run(accuracy, feed_dict={x: x_data, y: y_data, keep_prob: 1.0})
+
+#Probability of the output being in certain class. 
+#sess.run(y_model, feed_dict={x: x_data, y: y_data,keep_prob: 1.0})
