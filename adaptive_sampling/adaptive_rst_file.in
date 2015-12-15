@@ -1,0 +1,56 @@
+from sklearn.cluster import KMeans
+import numpy as np
+import glob
+import os
+import cPickle as pkl
+import pandas as pd
+
+
+temp=pd.read_csv('pyl10_apo_distance_r6.dat',sep='\s+')
+dataset= np.array(temp)
+dataset=dataset[:,1:4]
+
+cluster = KMeans(n_clusters=500)
+cluster.fit(dataset)
+centers=cluster.cluster_centers_
+l=cluster.labels_
+n_cluster = cluster.n_clusters
+n_frames=len(dataset)
+
+count_matrix = np.zeros(n_cluster)   #Contains the count of each cluster.
+for j in range(0,(n_frames)):
+	cluster_id = l[j]
+	count_matrix[cluster_id]= count_matrix[cluster_id] + 1
+
+sorted_index = count_matrix.argsort()
+sorted_centers=centers[sorted_index]
+
+
+frames=[]
+for i in range(len(sorted_centers)):
+	if sorted_centers[i][2]<15:
+		frame_index=np.where(l==sorted_index[i])
+		frame_index=np.array(frame_index)
+		frames.append(frame_index[0][0].tolist())
+	else:
+		pass
+
+frames=np.array(frames)
+frames=frames+1  
+#Trim the frames if needed. 
+
+#writing the file 
+f=open('rst_extract.in','wb')
+f.write('parm ../round4/stripped.apo_aba.top'+ '\n')
+f.write('trajin ../round1/pyl10_apo_aba_r1_prot.mdcrd'+ '\n')
+f.write('trajin ../round2/pyl10_apo_aba_r2_stripped.mdcrd'+ '\n')
+f.write('trajin ../round3/pyl10_apo_aba_r3_stripped.mdcrd'+ '\n')
+f.write('trajin ../round4/pyl10_apo_aba_r4_stripped.mdcrd'+ '\n')
+f.write('parmbox alpha 90 beta 90 gamma 90'+ '\n')
+for i in range(len(frames)):
+  f.write('trajout par'+ str(i+1)+'_sim0.rst restart onlyframes '+str(frames[i])+ '\n')
+f.write('run'+ '\n')
+f.write('quit'+ '\n')
+
+f.close()
+
