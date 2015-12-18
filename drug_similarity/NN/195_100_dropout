@@ -7,17 +7,17 @@ x = tf.placeholder("float", [None, 195])
 y = tf.placeholder("float", [None, 2 ])
 
 #Defining weight variables
-def weight_variable(shape):
+def weight_variable(shape,var_name):
   initial = tf.truncated_normal(shape, stddev=0.1)
-  return tf.Variable(initial)
+  return tf.Variable(initial,name=var_name)
   
-def bias_variable(shape):
+def bias_variable(shape,var_name):
   initial = tf.constant(0.1, shape=shape)
-  return tf.Variable(initial)
+  return tf.Variable(initial, name=var_name)
   
 #First Layer (100 Nodes)
-w_l1=weight_variable([195,100])
-b_l1=bias_variable([100])
+w_l1=weight_variable([195,100],'w_l1')
+b_l1=bias_variable([100],'b_l1')
 h_1=tf.sigmoid(tf.matmul(x,w_l1) + b_l1)
 
 #Dropout
@@ -25,8 +25,8 @@ keep_prob = tf.placeholder("float")
 h_1_drop = tf.nn.dropout(h_1, keep_prob)
 
 #Readout Layer (Binary output)
-w_l2=weight_variable([100,2])
-b_l2=bias_variable([2])
+w_l2=weight_variable([100,2],'w_l2')
+b_l2=bias_variable([2],'b_l2')
 y_model=tf.nn.softmax(tf.matmul(h_1_drop,w_l2) + b_l2)
 
 #Training the model
