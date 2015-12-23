@@ -13,11 +13,11 @@ y.close()
 oral=combined[0:978]
 agro=combined[978:5458]
 
-for i in range(0,109):
+for i in range(0,196):
   a=[oral[:,i],agro[:,i]]
-  sns.violinplot(data=a)
+  sns.boxplot(data=a)
   mean_oral=oral[:,i].mean()
   mean_agro=agro[:,i].mean()
   plt.title('feature_' +str(i) + ': oral mean(' +str(mean_oral) + ') agro mean(' + str(mean_agro) +')')
-  plt.savefig('/Users/Saurabh/Dropbox/drug_project/violinplots/feature_'+ str(i) +'.png')
+  plt.savefig('/Users/Saurabh/Dropbox/drug_project/boxplots/feature_'+ str(i) +'.png')
   plt.close()
