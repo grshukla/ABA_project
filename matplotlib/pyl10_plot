@@ -6,8 +6,8 @@ import os
 from matplotlib.colors import LogNorm
 
 #Filename 
-f_name='pyl10_apo_distance_r1.dat'
-round=1
+f_name='pyl10_apo_distance_r6.dat'
+round=6
 
 #Reading the file 
 temp=pd.read_csv(f_name, sep='\s+')
